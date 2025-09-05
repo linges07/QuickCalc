@@ -1,1 +1,72 @@
+import java.util.Scanner;
 
+public class QuickCalc {
+
+    public static void main(String[] args) {
+        
+        Scanner scanner = new Scanner(System.in);
+        String choice = "y"; // Initialize choice to "y" to start the loop
+
+        System.out.println("--- Welcome to QuickCalc! ---");
+        System.out.println("Available operators: +, -, *, /");
+        
+        while (choice.equalsIgnoreCase("y")) {
+            
+            try {
+                // Prompt the user for the first number
+                System.out.print("Enter first number: ");
+                double num1 = scanner.nextDouble();
+
+                // Prompt for the operator
+                System.out.print("Enter operator (+, -, *, /): ");
+                char operator = scanner.next().charAt(0);
+
+                // Prompt for the second number
+                System.out.print("Enter second number: ");
+                double num2 = scanner.nextDouble();
+
+                double result;
+
+                // Perform the calculation based on the operator using a switch statement
+                switch (operator) {
+                    case '+':
+                        result = num1 + num2;
+                        System.out.printf("Result: %.2f + %.2f = %.2f%n", num1, num2, result);
+                        break;
+                    case '-':
+                        result = num1 - num2;
+                        System.out.printf("Result: %.2f - %.2f = %.2f%n", num1, num2, result);
+                        break;
+                    case '*':
+                        result = num1 * num2;
+                        System.out.printf("Result: %.2f * %.2f = %.2f%n", num1, num2, result);
+                        break;
+                    case '/':
+                        // Handle division by zero to prevent an error
+                        if (num2 == 0) {
+                            System.out.println("Error: Cannot divide by zero.");
+                        } else {
+                            result = num1 / num2;
+                            System.out.printf("Result: %.2f / %.2f = %.2f%n", num1, num2, result);
+                        }
+                        break;
+                    default:
+                        // Inform the user if an invalid operator was entered
+                        System.out.println("Error: Invalid operator entered.");
+                }
+            } catch (java.util.InputMismatchException e) {
+                // Catch non-numeric input errors and clear the scanner buffer
+                System.out.println("Error: Invalid input. Please enter numbers and a valid operator.");
+                scanner.next(); // Clear the invalid input from the scanner
+            }
+            
+            // Ask the user if they want to continue
+            System.out.println("\nDo you want to perform another calculation? (y/n)");
+            choice = scanner.next();
+        }
+
+        // Close the scanner and print a farewell message when the loop ends
+        scanner.close();
+        System.out.println("Thank you for using QuickCalc!");
+    }
+}
